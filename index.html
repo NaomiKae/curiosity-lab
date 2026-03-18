@@ -807,25 +807,24 @@ const projects={
   knowitall:{label:'KnowItAll',url:'https://knowitall.naomikrountree.design/'},
   rhetoric:{label:'Rhetoric Decoder',url:'https://rhetoric.naomikrountree.design/'},
   casestudies:{label:'Case Studies',url:'#casestudies'},
-  about:{label:'About me',url:'#about'}
+  about:{label:'About me',url:'/about.html'}
 };
 
 function openProject(key){
   const p=projects[key];
   if(!p)return;
+  if(p.url.startsWith('#'))return;
+  if(p.url.startsWith('/')){
+    window.location.href=p.url;
+    return;
+  }
   const overlay=document.getElementById('project-overlay');
   const frame=document.getElementById('project-frame');
   const label=document.getElementById('overlay-label');
   label.textContent='// '+p.label.toLowerCase();
-  if(p.url.startsWith('#')){
-    frame.src='';
-    frame.style.display='none';
-    overlay.style.display='flex';
-  } else {
-    frame.style.display='block';
-    frame.src=p.url;
-    overlay.style.display='flex';
-  }
+  frame.style.display='block';
+  frame.src=p.url;
+  overlay.style.display='flex';
 }
 
 function closeProject(){
