@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TriMetrics ECE — Naomi Rountree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --bg:#FAFAF8;
+  --ink:#1A1A18;
+  --ink-mid:#4A4A46;
+  --ink-light:#8A8A84;
+  --rule:#E4E4DE;
+  --accent-bg:#F4F2EE;
+  --highlight:#1A1A18;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'DM Sans',sans-serif;
+  font-weight:400;
+  line-height:1.7;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  padding:20px 48px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(250,250,248,0.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+  z-index:100;
+}
+.nav-back{
+  font-family:'DM Sans',sans-serif;
+  font-size:13px;
+  color:var(--ink-light);
+  text-decoration:none;
+  letter-spacing:0.5px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  transition:color 0.2s;
+}
+.nav-back:hover{color:var(--ink);}
+.nav-name{
+  font-family:'DM Serif Display',serif;
+  font-size:16px;
+  color:var(--ink);
+}
+.nav-tag{
+  font-size:11px;
+  font-weight:500;
+  color:var(--ink-light);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  background:var(--accent-bg);
+  padding:4px 12px;
+  border-radius:2px;
+}
+
+/* ── PAGE ── */
+.page{
+  max-width:740px;
+  margin:0 auto;
+  padding:120px 32px 96px;
+}
+
+/* ── HERO ── */
+.hero{
+  margin-bottom:56px;
+  opacity:0;
+  animation:fadein 0.7s ease forwards;
+}
+@keyframes fadein{to{opacity:1;transform:none;}from{opacity:0;transform:translateY(12px);}}
+
+.hero-tag{
+  font-size:11px;
+  font-weight:500;
+  color:var(--ink-light);
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+.hero-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(36px,5vw,52px);
+  line-height:1.15;
+  color:var(--ink);
+  letter-spacing:-0.5px;
+  margin-bottom:16px;
+}
+.hero-sub{
+  font-family:'DM Serif Display',serif;
+  font-style:italic;
+  font-size:clamp(18px,2.5vw,22px);
+  color:var(--ink-mid);
+  line-height:1.5;
+  margin-bottom:28px;
+}
+.hero-meta{
+  display:flex;
+  gap:32px;
+  flex-wrap:wrap;
+}
+.meta-item{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.meta-label{
+  font-size:10px;
+  font-weight:500;
+  color:var(--ink-light);
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+.meta-value{
+  font-size:14px;
+  color:var(--ink-mid);
+}
+
+/* ── RULE ── */
+.rule{
+  height:1px;
+  background:var(--rule);
+  margin:48px 0;
+}
+
+/* ── SNAPSHOT BOX ── */
+.snapshot{
+  background:var(--accent-bg);
+  border-left:2px solid var(--ink);
+  padding:28px 32px;
+  margin-bottom:48px;
+  opacity:0;
+  animation:fadein 0.7s ease 0.1s forwards;
+}
+.snapshot-title{
+  font-size:10px;
+  font-weight:500;
+  color:var(--ink-light);
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+.snapshot-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+@media(max-width:520px){.snapshot-grid{grid-template-columns:1fr;}}
+.snapshot-item-label{
+  font-size:11px;
+  font-weight:500;
+  color:var(--ink-light);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+.snapshot-item-value{
+  font-size:15px;
+  color:var(--ink-mid);
+  line-height:1.6;
+}
+.snapshot-cta{
+  margin-top:24px;
+  padding-top:20px;
+  border-top:1px solid var(--rule);
+  display:flex;
+  align-items:center;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:11px 22px;
+  border:1.5px solid var(--ink);
+  border-radius:2px;
+  font-family:'DM Sans',sans-serif;
+  font-size:13px;
+  font-weight:500;
+  color:var(--ink);
+  text-decoration:none;
+  letter-spacing:0.5px;
+  transition:all 0.2s ease;
+}
+.btn:hover{background:var(--ink);color:var(--bg);}
+.btn.filled{background:var(--ink);color:var(--bg);}
+.btn.filled:hover{background:transparent;color:var(--ink);}
+
+/* ── SECTIONS ── */
+.section{
+  margin-bottom:56px;
+  opacity:0;
+  animation:fadein 0.7s ease forwards;
+}
+.section:nth-child(3){animation-delay:0.15s;}
+.section:nth-child(4){animation-delay:0.2s;}
+.section:nth-child(5){animation-delay:0.25s;}
+.section:nth-child(6){animation-delay:0.3s;}
+.section:nth-child(7){animation-delay:0.35s;}
+.section:nth-child(8){animation-delay:0.4s;}
+
+.section-label{
+  font-size:11px;
+  font-weight:500;
+  color:var(--ink-light);
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.section-label::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--rule);
+}
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,3vw,28px);
+  color:var(--ink);
+  margin-bottom:16px;
+  letter-spacing:-0.3px;
+  line-height:1.3;
+}
+.section-body{
+  color:var(--ink-mid);
+  line-height:1.85;
+  font-size:16px;
+}
+.section-body p+p{margin-top:16px;}
+
+/* Pull quote */
+.pull{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(17px,2.5vw,21px);
+  font-style:italic;
+  color:var(--ink);
+  line-height:1.55;
+  border-left:2px solid var(--ink);
+  padding:6px 0 6px 24px;
+  margin:28px 0;
+}
+
+/* Persona cards */
+.persona-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:20px;
+}
+@media(max-width:540px){.persona-grid{grid-template-columns:1fr;}}
+.persona-card{
+  background:var(--accent-bg);
+  padding:18px 20px;
+  border-radius:2px;
+}
+.persona-name{
+  font-size:13px;
+  font-weight:500;
+  color:var(--ink);
+  margin-bottom:5px;
+  letter-spacing:0.3px;
+}
+.persona-desc{
+  font-size:13px;
+  color:var(--ink-mid);
+  line-height:1.6;
+}
+
+/* Insight callout */
+.callout{
+  background:var(--accent-bg);
+  border-left:2px solid var(--ink);
+  padding:18px 22px;
+  margin:24px 0;
+  font-family:'DM Serif Display',serif;
+  font-style:italic;
+  font-size:16px;
+  color:var(--ink);
+  line-height:1.6;
+}
+
+/* ── CLOSING ── */
+.closing{
+  margin-top:64px;
+  padding-top:40px;
+  border-top:1px solid var(--rule);
+}
+.closing-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,3vw,28px);
+  color:var(--ink);
+  margin-bottom:14px;
+}
+.closing-body{
+  font-size:16px;
+  color:var(--ink-mid);
+  line-height:1.85;
+  margin-bottom:28px;
+}
+
+/* ── FOOTER ── */
+.footer{
+  margin-top:64px;
+  padding-top:28px;
+  border-top:1px solid var(--rule);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.footer-left{font-size:13px;color:var(--ink-light);}
+.footer-right a{font-size:13px;color:var(--ink-light);text-decoration:none;transition:color 0.2s;}
+.footer-right a:hover{color:var(--ink);}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-back">← Curiosity Lab</a>
+  <div class="nav-name">Naomi Rountree</div>
+  <div class="nav-tag">Case Study</div>
+</nav>
+
+<main class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Case Study 01</div>
+    <h1 class="hero-title">TriMetrics ECE</h1>
+    <p class="hero-sub">An iron triangle financial dashboard for early childhood education — built from listening, finished on my own time.</p>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">UX & Product Designer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Type</span>
+        <span class="meta-value">Greenfield prototype</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Users</span>
+        <span class="meta-value">ECE operators, 4 personas</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value">Live prototype</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SNAPSHOT -->
+  <div class="snapshot">
+    <div class="snapshot-title">The 55-second version</div>
+    <div class="snapshot-grid">
+      <div>
+        <div class="snapshot-item-label">What is this?</div>
+        <div class="snapshot-item-value">A purpose-built financial dashboard tracking the three metrics ECE operators need most — enrollment, revenue per child, and fee collection — in one place, with AI insights calibrated to whoever is looking.</div>
+      </div>
+      <div>
+        <div class="snapshot-item-label">Why does it exist?</div>
+        <div class="snapshot-item-value">Because I talked to the people who needed it, watched it get partially built, and finished it myself when it was shelved before it was done.</div>
+      </div>
+      <div>
+        <div class="snapshot-item-label">Who it's for</div>
+        <div class="snapshot-item-value">Four distinct personas — single-center owners, franchise operators, enterprise networks, and shared service providers — each with their own workspace.</div>
+      </div>
+      <div>
+        <div class="snapshot-item-label">What I'm most proud of</div>
+        <div class="snapshot-item-value">The SSP workspace. It exists because someone told me directly what they needed and nobody else was listening closely enough to build it.</div>
+      </div>
+    </div>
+    <div class="snapshot-cta">
+      <a href="https://trimetrics.naomikrountree.design" target="_blank" class="btn filled">View live prototype ↗</a>
+      <button onclick="expandStory()" id="expand-btn" class="btn">Read the full story ↓</button>
+    </div>
+  </div>
+
+  <!-- FULL STORY — hidden until expanded -->
+  <div id="full-story" style="display:none;opacity:0;transition:opacity 0.4s ease;">
+
+  <!-- WHERE IT STARTED -->
+  <div class="section">
+    <div class="section-label">Background</div>
+    <h2 class="section-title">Where it started</h2>
+    <div class="section-body">
+      <p>I work at a highly regarded, long-standing ECE software company. Trusted by the sector for decades, genuinely deep product — but software that's been around that long carries its own weight. Making changes is slow, and the company made a move I think was right: they acquired a newer online platform and started building toward a future where operators could run their programs from anywhere.</p>
+      <p>The problem is the online product and the legacy desktop have real gaps between them. Customers were being directed toward the online version — customers who needed things it wasn't fully built to do yet. I picked up a piece of the online product with the intention of closing some of those gaps. Specifically the financial ones.</p>
+      <p>We shipped two sides of the Iron Triangle. The third never made it out.</p>
+    </div>
+  </div>
+
+  <!-- RESEARCH -->
+  <div class="section">
+    <div class="section-label">Research</div>
+    <h2 class="section-title">What I heard before I built anything</h2>
+    <div class="section-body">
+      <p>Before I designed a single screen I spent time listening to the people this product was for. Not formal research — real conversations. Operators reaching out with frustrations. Sales calls where customers were realizing the product they'd bought didn't quite fit. Moments where someone described their day-to-day and I just paid attention.</p>
+    </div>
+    <div class="persona-grid">
+      <div class="persona-card">
+        <div class="persona-name">Center owners</div>
+        <div class="persona-desc">Exhausted by manual work. Enrollment in one place, invoicing in another, subsidy reimbursements falling through the cracks. They needed something that told them where they stood and what to do about it right now.</div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-name">Franchise operators</div>
+        <div class="persona-desc">Couldn't see their whole portfolio without building their own spreadsheets. The question they kept asking: <em>which of my schools needs me today?</em></div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-name">Enterprise networks</div>
+        <div class="persona-desc">Needed a portfolio view at regional scale — a way to spot patterns before they became problems across networks spanning multiple geographies.</div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-name">Shared service providers</div>
+        <div class="persona-desc">Don't own the programs they support — they monitor health across programs they're responsible for without controlling. One SSP told me directly: <em>"sometimes I don't know if the numbers are old."</em> That sentence became a feature.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT GOT BUILT -->
+  <div class="section">
+    <div class="section-label">The gap</div>
+    <h2 class="section-title">What got built — and what didn't</h2>
+    <div class="section-body">
+      <p>We shipped the enrollment tracking and fee collection pieces. And the SSPs who got access to even that partial version loved it. That told me everything — if two sides of the triangle were enough to generate that reaction, three sides done right would have been transformative for people who'd been promised a product that could meet their needs.</p>
+      <p>But the third side — revenue per child, the complete picture — never shipped. The project was deprioritized.</p>
+      <div class="pull">"I'd talked to the people. I knew what they needed. I watched some of them get sold on a product that couldn't fully deliver yet. So I finished it myself."</div>
+    </div>
+  </div>
+
+  <!-- THE REBUILD -->
+  <div class="section">
+    <div class="section-label">Design decisions</div>
+    <h2 class="section-title">The rebuild</h2>
+    <div class="section-body">
+      <p>I rebuilt the whole thing from scratch, on my own time, as the version I always believed it could be.</p>
+
+      <p><strong>The personas.</strong> Most tools treat "multiple sites" as one category. A franchise owner with five schools and an SSP supporting thirty independent programs are doing completely different jobs when they open a dashboard. The single-center owner gets everything on one screen with AI insights in plain language. The franchise owner gets a portfolio view where the question they kept asking — <em>which of my schools needs me today</em> — is answered the moment the page loads. The SSP workspace is the one I'm most proud of — the intervention queue, the program health table, the data reporting status column showing when each program last submitted data. None of that came from guessing. It came from someone describing their reality and me taking it seriously enough to build it.</p>
+
+      <p><strong>Subsidy is woven in, not siloed.</strong> This decision came from a specific problem in the existing platform. When operators go to their finance section, they see cashflow from families. Subsidy lives on a separate tab. Most don't realize the two are disconnected — so when they pull numbers into their own spreadsheets, they're only capturing the first tab. Their totals are off and they don't know why.</p>
+
+      <div class="callout">"They're making decisions on an incomplete picture of their own revenue, and the platform is quietly letting them. That's not a missing feature. That's a trust problem."</div>
+
+      <p>In TriMetrics, subsidy never gets its own tab. The revenue per child figure shows the private pay and subsidy split directly. The fee collection rate flags when pending reimbursements would move the number if filed. If it's part of your financial reality, it shows up where you're already looking.</p>
+
+      <p><strong>The onboarding routes people to the right place.</strong> A short questionnaire cross-references role with program count — an SSP managing a large portfolio gets a different workspace than a franchise owner with the same number of locations. The integration step connects to the tools operators already use. Real adoption requires meeting people where their data already lives.</p>
+    </div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="closing">
+    <h2 class="closing-title">What this is actually about</h2>
+    <p class="closing-body">The SSPs who loved the partial version we shipped — they're the part that stays with me. They found value in something incomplete and told us clearly. That's evidence. Evidence that the need was real, the direction was right, and that the people who were sold a product that didn't fully fit them deserved something better.</p>
+    <p class="closing-body">I believe in human-centered design in a pretty straightforward way: you listen to what people are dealing with, you take it seriously enough to build something about it, and then you check whether it actually helped.</p>
+    <p class="closing-body" style="font-family:'DM Serif Display',serif;font-style:italic;font-size:18px;color:var(--ink);">People told me what they needed. I built it.</p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:28px;">
+      <a href="https://trimetrics.naomikrountree.design" target="_blank" class="btn filled">View live prototype ↗</a>
+      <a href="/case-studies.html" class="btn">← All case studies</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">Naomi Rountree · UX &amp; Product Designer</div>
+    <div class="footer-right"><a href="/">← Back to Curiosity Lab</a></div>
+  </div>
+
+  </div><!-- end #full-story -->
+
+</main>
+
+<script>
+function expandStory(){
+  const story=document.getElementById('full-story');
+  const btn=document.getElementById('expand-btn');
+  story.style.display='block';
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      story.style.opacity='1';
+    });
+  });
+  btn.style.display='none';
+  setTimeout(()=>{
+    story.scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+</script>
+
+</body>
+</html>
