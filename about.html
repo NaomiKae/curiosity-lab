@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Naomi Rountree</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --bg:#FAFAF8;
+  --ink:#1A1A18;
+  --ink-mid:#4A4A46;
+  --ink-light:#8A8A84;
+  --rule:#E4E4DE;
+  --accent:#1A1A18;
+  --photo-bg:#E8E4DC;
+}
+
+html{scroll-behavior:smooth;}
+
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'DM Sans',sans-serif;
+  font-weight:400;
+  line-height:1.7;
+  font-size:17px;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ── NAV ── */
+.nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  padding:20px 48px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(250,250,248,0.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule);
+  z-index:100;
+}
+.nav-back{
+  font-family:'DM Sans',sans-serif;
+  font-size:13px;
+  color:var(--ink-light);
+  text-decoration:none;
+  letter-spacing:0.5px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  transition:color 0.2s;
+}
+.nav-back:hover{color:var(--ink);}
+.nav-name{
+  font-family:'DM Serif Display',serif;
+  font-size:16px;
+  color:var(--ink);
+  letter-spacing:0.3px;
+}
+.nav-links{
+  display:flex;
+  gap:24px;
+  align-items:center;
+}
+.nav-link{
+  font-size:13px;
+  color:var(--ink-light);
+  text-decoration:none;
+  letter-spacing:0.5px;
+  transition:color 0.2s;
+  display:flex;align-items:center;gap:5px;
+}
+.nav-link:hover{color:var(--ink);}
+.nav-link .arrow{font-size:10px;opacity:0.6;}
+
+/* ── MAIN LAYOUT ── */
+.page{
+  max-width:720px;
+  margin:0 auto;
+  padding:120px 32px 96px;
+}
+
+/* ── INTRO ── */
+.intro-block{
+  margin-bottom:64px;
+  opacity:0;
+  animation:fadein 0.7s ease forwards;
+}
+@keyframes fadein{to{opacity:1;transform:none;}from{opacity:0;transform:translateY(12px);}}
+
+.photo-placeholder{
+  width:80px;height:80px;
+  border-radius:50%;
+  background:var(--photo-bg);
+  border:2px solid var(--rule);
+  margin-bottom:28px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;
+  color:var(--ink-light);
+}
+
+.intro-tag{
+  font-family:'DM Sans',sans-serif;
+  font-size:12px;
+  font-weight:500;
+  color:var(--ink-light);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+
+.intro-headline{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(36px,5vw,52px);
+  line-height:1.15;
+  color:var(--ink);
+  margin-bottom:20px;
+  letter-spacing:-0.5px;
+}
+
+.intro-headline em{
+  font-style:italic;
+  color:var(--ink-mid);
+}
+
+.intro-body{
+  font-size:18px;
+  color:var(--ink-mid);
+  line-height:1.75;
+  max-width:580px;
+}
+
+/* ── SECTION ── */
+.section{
+  padding:48px 0;
+  border-top:1px solid var(--rule);
+  opacity:0;
+  animation:fadein 0.7s ease forwards;
+}
+.section:nth-child(2){animation-delay:0.1s;}
+.section:nth-child(3){animation-delay:0.2s;}
+.section:nth-child(4){animation-delay:0.3s;}
+.section:nth-child(5){animation-delay:0.4s;}
+.section:nth-child(6){animation-delay:0.5s;}
+
+.section-label{
+  font-size:11px;
+  font-weight:500;
+  color:var(--ink-light);
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+
+.section-title{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(22px,3vw,28px);
+  color:var(--ink);
+  margin-bottom:16px;
+  letter-spacing:-0.3px;
+  line-height:1.25;
+}
+
+.section-body{
+  color:var(--ink-mid);
+  line-height:1.8;
+  font-size:16px;
+}
+
+.section-body p+p{
+  margin-top:14px;
+}
+
+/* Pull quote */
+.pull{
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(18px,2.5vw,22px);
+  font-style:italic;
+  color:var(--ink);
+  line-height:1.5;
+  border-left:2px solid var(--ink);
+  padding:4px 0 4px 24px;
+  margin:28px 0;
+}
+
+/* ── CTA LINKS ── */
+.cta-row{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-top:8px;
+}
+.cta-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 24px;
+  border:1.5px solid var(--ink);
+  border-radius:2px;
+  font-family:'DM Sans',sans-serif;
+  font-size:13px;
+  font-weight:500;
+  color:var(--ink);
+  text-decoration:none;
+  letter-spacing:0.5px;
+  transition:all 0.2s ease;
+}
+.cta-btn:hover{
+  background:var(--ink);
+  color:var(--bg);
+}
+.cta-btn.filled{
+  background:var(--ink);
+  color:var(--bg);
+}
+.cta-btn.filled:hover{
+  background:transparent;
+  color:var(--ink);
+}
+
+/* ── FOOTER ── */
+.footer{
+  margin-top:80px;
+  padding-top:32px;
+  border-top:1px solid var(--rule);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.footer-left{
+  font-size:13px;
+  color:var(--ink-light);
+}
+.footer-right{
+  font-size:13px;
+  color:var(--ink-light);
+}
+.footer-right a{
+  color:var(--ink-light);
+  text-decoration:none;
+  transition:color 0.2s;
+}
+.footer-right a:hover{color:var(--ink);}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="/" class="nav-back">← Curiosity Lab</a>
+  <div class="nav-name">Naomi Rountree</div>
+  <div class="nav-links">
+    <a href="https://linkedin.com" target="_blank" class="nav-link">LinkedIn <span class="arrow">↗</span></a>
+    <a href="/resume.pdf" target="_blank" class="nav-link">Resume <span class="arrow">↗</span></a>
+  </div>
+</nav>
+
+<main class="page">
+
+  <!-- INTRO -->
+  <div class="intro-block">
+    <div class="photo-placeholder">NR</div>
+    <div class="intro-tag">About me</div>
+    <h1 class="intro-headline">Hi, I'm Naomi.<br><em>You already know what I do</em> —<br>and honestly, that's a relief.</h1>
+    <p class="intro-body">If you're here, you probably already know what a UX designer does. I spend a lot of time explaining it to people who think I make logos. So it's nice to skip that part and just talk about the work.</p>
+  </div>
+
+  <!-- CURIOSITY LAB -->
+  <div class="section">
+    <div class="section-label">The name</div>
+    <h2 class="section-title">Why Curiosity Lab?</h2>
+    <div class="section-body">
+      <p>Because the best work I've ever done started with a question I wasn't supposed to ask. Curiosity is how I find the thing underneath the thing — the real friction, the actual need, the decision nobody thought to document.</p>
+      <div class="pull">"This portfolio is built the same way: not a gallery, but a lab. Things get tested here. Some of them ship."</div>
+      <p>The name is also a personal commitment. Staying curious is how I stay honest about what users actually need versus what we think they need.</p>
+    </div>
+  </div>
+
+  <!-- OPERATING SYSTEM -->
+  <div class="section">
+    <div class="section-label">How I think</div>
+    <h2 class="section-title">UX fit my operating system before I knew what UX was.</h2>
+    <div class="section-body">
+      <p>I came to design the long way — through art, film, pattern recognition, and a lifelong habit of noticing how systems connect. My first grade teacher caught me trying to draw in three-point perspective. I didn't have the vocabulary for it yet, but I was already trying to understand how things relate to each other in space.</p>
+      <p>That instinct didn't go away. It just found a better home in product design. I think in flows, not screens. In cause and effect, not components. In the whole map, not the current pin. Systems thinking isn't a methodology I learned — it's closer to a factory setting.</p>
+    </div>
+  </div>
+
+  <!-- PHILOSOPHY -->
+  <div class="section">
+    <div class="section-label">Design philosophy</div>
+    <h2 class="section-title">Listen first. Not to be polite — because the real problem is almost never the one in the brief.</h2>
+    <div class="section-body">
+      <p>I've changed export formats because a customer told me she shouldn't have to pay for another subscription just to read her own data. I've rebuilt dashboards because the people using them couldn't see what they actually needed to see.</p>
+      <p>Relating to people isn't soft skill filler for me. It's the method. Better products come from better listening, and better listening comes from genuinely caring what someone's Tuesday afternoon feels like when the tool isn't working.</p>
+    </div>
+  </div>
+
+  <!-- OUTSIDE THE WORK -->
+  <div class="section">
+    <div class="section-label">Outside the work</div>
+    <h2 class="section-title">I make things that don't have user flows.</h2>
+    <div class="section-body">
+      <p>I'm currently writing a conceptual art book of poems — structured in three parts, designed like an album, meant to be experienced as a journey rather than read as a collection. It's the most nonlinear thing I make, which probably says something about how I think about everything else.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="section">
+    <div class="section-label">Let's talk</div>
+    <h2 class="section-title">Open to new roles.</h2>
+    <div class="section-body">
+      <p>I'm looking for a team that cares about building things that actually work for the people using them. If that sounds like yours, I'd love to connect.</p>
+    </div>
+    <div class="cta-row" style="margin-top:28px;">
+      <a href="https://linkedin.com" target="_blank" class="cta-btn filled">LinkedIn ↗</a>
+      <a href="/resume.pdf" target="_blank" class="cta-btn">Resume ↗</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-left">Naomi Rountree · UX &amp; Product Designer</div>
+    <div class="footer-right"><a href="/">← Back to Curiosity Lab</a></div>
+  </div>
+
+</main>
+
+</body>
+</html>
