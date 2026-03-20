@@ -794,7 +794,15 @@ html,body{
 <!-- Full-screen overlay -->
 <div id="project-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:100;flex-direction:column;">
   <div style="padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #333;">
-    <div style="font-family:'Space Mono',monospace;font-size:11px;color:#AAA;letter-spacing:2px;" id="overlay-label">// project</div>
+    <div style="display:flex;align-items:center;gap:12px;">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:#AAA;letter-spacing:2px;" id="overlay-label">// project</div>
+      <div id="anno-wrap" style="display:none;align-items:center;gap:8px;">
+        <div id="cl-anno-track" onclick="toggleOverlayAnno()" style="width:32px;height:17px;border-radius:9px;background:#444;position:relative;cursor:pointer;transition:background 0.2s;flex-shrink:0;">
+          <div id="cl-anno-thumb" style="width:11px;height:11px;background:white;border-radius:50%;position:absolute;top:3px;left:3px;transition:transform 0.2s;box-shadow:0 1px 2px rgba(0,0,0,0.3);"></div>
+        </div>
+        <span onclick="toggleOverlayAnno()" style="font-family:'Space Mono',monospace;font-size:9px;color:#888;letter-spacing:2px;cursor:pointer;user-select:none;">UX ANNOTATIONS</span>
+      </div>
+    </div>
     <button onclick="closeProject()" style="font-family:'Space Mono',monospace;font-size:11px;color:#CCC;background:none;border:1px solid #666;border-radius:3px;padding:5px 14px;cursor:pointer;letter-spacing:1px;">✕ ESC</button>
   </div>
   <iframe id="project-frame" style="flex:1;width:100%;border:none;background:#fff;" src=""></iframe>
@@ -802,13 +810,27 @@ html,body{
 
 <script>
 const projects={
-  trimetrics:{label:'TriMetrics ECE',url:'https://trimetrics.naomikrountree.design/'},
+  trimetrics:{label:'TriMetrics ECE',url:'https://trimetrics.naomikrountree.design/',annotated:true},
   retrotunes:{label:'RetroTunes',url:'https://retrotunes.naomikrountree.design/'},
   knowitall:{label:'KnowItAll',url:'https://knowitall.naomikrountree.design/'},
   rhetoric:{label:'Rhetoric Decoder',url:'https://rhetoric.naomikrountree.design/'},
   casestudies:{label:'Case Studies',url:'/case-studies.html'},
   about:{label:'About me',url:'/about.html'}
 };
+
+let annoOn = false;
+
+function toggleOverlayAnno(){
+  annoOn = !annoOn;
+  const track = document.getElementById('cl-anno-track');
+  const thumb = document.getElementById('cl-anno-thumb');
+  track.style.background = annoOn ? '#6366F1' : '#444';
+  thumb.style.transform = annoOn ? 'translateX(15px)' : 'translateX(0)';
+  const frame = document.getElementById('project-frame');
+  if(frame && frame.contentWindow){
+    frame.contentWindow.postMessage({type:'ANNO_TOGGLE'}, '*');
+  }
+}
 
 function openProject(key){
   const p=projects[key];
@@ -821,7 +843,16 @@ function openProject(key){
   const overlay=document.getElementById('project-overlay');
   const frame=document.getElementById('project-frame');
   const label=document.getElementById('overlay-label');
+  const annoWrap=document.getElementById('anno-wrap');
   label.textContent='// '+p.label.toLowerCase();
+  // Show toggle only for annotated projects
+  annoWrap.style.display = p.annotated ? 'flex' : 'none';
+  // Reset toggle state
+  annoOn = false;
+  const track = document.getElementById('cl-anno-track');
+  const thumb = document.getElementById('cl-anno-thumb');
+  track.style.background = '#444';
+  thumb.style.transform = 'translateX(0)';
   frame.style.display='block';
   frame.src=p.url;
   overlay.style.display='flex';
