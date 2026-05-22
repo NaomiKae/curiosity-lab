@@ -11,444 +11,575 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 
 :root{
-  --bg:#FAFAF8;
+  --bg:#1a2340;
+  --bg2:#1e2a4a;
   --ink:#1A1A18;
-  --ink-mid:#4A4A46;
-  --ink-light:#6A6A64;
+  --ink-mid:#2E2E2B;
+  --ink-light:#4A4A46;
   --rule:#E4E4DE;
   --accent-bg:#F4F2EE;
+  --teal:#0f6e56;
+  --teal-lt:#e1f5ee;
+  --folder-ux:#7b9fd4;
+  --folder-sd:#5bbfa8;
+  --folder-soon:#a89cc8;
+  --text-desktop:rgba(255,255,255,0.96);
+  --text-desktop-sub:rgba(255,255,255,0.80);
 }
 
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;height:100%;}
 
 body{
   background:var(--bg);
-  color:var(--ink);
+  color:var(--text-desktop);
   font-family:'DM Sans',sans-serif;
   font-weight:400;
   line-height:1.7;
   -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  overflow-x:hidden;
 }
 
-/* ── NAV ── */
-.nav{
+/* ── DESKTOP BACKGROUND ── */
+.desktop{
+  min-height:100vh;
+  position:relative;
+  /* subtle noise + gradient sky */
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(91,191,168,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(123,159,212,0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(168,156,200,0.05) 0%, transparent 70%),
+    linear-gradient(160deg, #111827 0%, #1a2340 40%, #1e2b50 70%, #162038 100%);
+}
+
+/* subtle scanline texture */
+.desktop::before{
+  content:'';
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── NAV / MENUBAR ── */
+.menubar{
   position:fixed;
   top:0;left:0;right:0;
-  padding:20px 48px;
-  display:flex;
-  align-items:center;
+  height:44px;
+  background:rgba(10,14,28,0.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  display:flex;align-items:center;
   justify-content:space-between;
-  background:rgba(250,250,248,0.92);
-  backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--rule);
+  padding:0 24px;
   z-index:100;
 }
-.nav-back{
-  font-size:13px;
-  color:var(--ink-light);
-  text-decoration:none;
-  letter-spacing:0.5px;
-  display:flex;align-items:center;gap:6px;
-  transition:color 0.2s;
-}
-.nav-back:hover{color:var(--ink);}
-.nav-name{
+.menubar-left{display:flex;align-items:center;gap:20px;}
+.menubar-logo{
   font-family:'DM Serif Display',serif;
-  font-size:16px;
-  color:var(--ink);
-}
-.nav-links{display:flex;gap:24px;align-items:center;}
-.nav-link{
-  font-size:13px;
-  color:var(--ink-light);
+  font-size:15px;color:rgba(255,255,255,0.9);
   text-decoration:none;
-  letter-spacing:0.5px;
+}
+.menubar-item{
+  font-size:12px;color:rgba(255,255,255,0.80);
+  text-decoration:none;letter-spacing:0.3px;
   transition:color 0.2s;
-  display:flex;align-items:center;gap:4px;
 }
-.nav-link:hover{color:var(--ink);}
-
-/* ── PAGE ── */
-.page{
-  max-width:760px;
-  margin:0 auto;
-  padding:120px 32px 96px;
+.menubar-item:hover{color:rgba(255,255,255,0.9);}
+.menubar-right{display:flex;align-items:center;gap:16px;}
+.menubar-clock{
+  font-size:12px;color:rgba(255,255,255,0.80);
+  letter-spacing:0.3px;font-variant-numeric:tabular-nums;
 }
 
-@keyframes fadein{
-  from{opacity:0;transform:translateY(12px);}
-  to{opacity:1;transform:none;}
+/* ── DESKTOP CONTENT ── */
+.desktop-content{
+  position:relative;z-index:1;
+  padding:80px 48px 80px;
 }
 
 /* ── HEADER ── */
-.page-header{
+.desktop-header{
   margin-bottom:52px;
-  padding-bottom:40px;
-  border-bottom:1px solid var(--rule);
   opacity:0;
-  animation:fadein 0.7s ease forwards;
+  animation:fadein 0.6s ease forwards;
 }
-.header-tag{
-  font-size:11px;font-weight:500;
-  color:var(--ink-light);
-  letter-spacing:2.5px;
-  text-transform:uppercase;
-  margin-bottom:14px;
+@keyframes fadein{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:none;}
 }
-.header-title{
+.desktop-eyebrow{
+  font-size:10px;font-weight:500;
+  color:rgba(255,255,255,0.70);
+  letter-spacing:3px;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.desktop-title{
   font-family:'DM Serif Display',serif;
-  font-size:clamp(32px,5vw,48px);
-  color:var(--ink);
-  line-height:1.15;
-  letter-spacing:-0.5px;
-  margin-bottom:14px;
+  font-size:clamp(28px,4vw,42px);
+  color:rgba(255,255,255,0.92);
+  line-height:1.2;letter-spacing:-0.3px;
+  margin-bottom:10px;
 }
-.header-body{
-  font-size:16px;
-  color:var(--ink-mid);
-  line-height:1.8;
-  max-width:560px;
-}
-
-/* ── CASE STUDY CARDS ── */
-.cards{
-  display:flex;
-  flex-direction:column;
-  gap:28px;
-}
-
-.card{
-  background:#fff;
-  border:1px solid var(--rule);
-  border-radius:4px;
-  overflow:hidden;
-  opacity:0;
-  animation:fadein 0.7s ease forwards;
-  transition:border-color 0.2s ease;
-}
-.card:hover{border-color:#BBBAB4;}
-.card:nth-child(1){animation-delay:0.1s;}
-.card:nth-child(2){animation-delay:0.2s;}
-
-/* Card visual zone */
-.card-visual{
-  height:160px;
-  border-bottom:1px solid var(--rule);
-  overflow:hidden;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px 24px;
-  background:var(--accent-bg);
-}
-
-/* TriMetrics mini preview */
-.mini-dashboard{
-  width:100%;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-.mini-top{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-.mini-metric{
-  background:#fff;
-  border:1px solid var(--rule);
-  border-radius:3px;
-  padding:6px 8px;
-}
-.mini-metric-label{
-  font-family:'DM Sans',sans-serif;
-  font-size:8px;
-  color:var(--ink-light);
-  letter-spacing:1px;
-  text-transform:uppercase;
-  margin-bottom:3px;
-}
-.mini-metric-val{
-  font-family:'DM Sans',sans-serif;
-  font-size:14px;
-  font-weight:500;
-  color:var(--ink);
-}
-.mini-bars{
-  background:#fff;
-  border:1px solid var(--rule);
-  border-radius:3px;
-  padding:8px 10px 6px;
-  display:flex;
-  align-items:flex-end;
-  gap:3px;
-  height:52px;
-}
-.mini-bar{
-  flex:1;
-  border-radius:1px 1px 0 0;
-}
-
-/* Reporting tool placeholder */
-.card-visual-placeholder{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  width:100%;
-  max-width:380px;
-}
-.ph-line{
-  height:10px;
-  background:rgba(0,0,0,0.08);
-  border-radius:2px;
-}
-.ph-line.bold{height:18px;background:rgba(0,0,0,0.12);}
-.visuals-badge{
-  position:absolute;
-  bottom:12px;right:14px;
-  font-size:10px;
-  color:var(--ink-light);
-  letter-spacing:1px;
-  font-style:italic;
-}
-
-/* Card body */
-.card-body{
-  padding:22px 24px 18px;
-}
-.tag-row{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-bottom:14px;
-}
-.tag{
-  font-size:11px;
-  font-weight:500;
-  color:var(--ink-light);
-  letter-spacing:1px;
-  text-transform:uppercase;
-  background:var(--accent-bg);
-  padding:3px 10px;
-  border-radius:2px;
-}
-.card-title{
-  font-family:'DM Serif Display',serif;
-  font-size:22px;
-  color:var(--ink);
-  margin-bottom:8px;
-  letter-spacing:-0.2px;
-}
-.card-desc{
+.desktop-title em{color:var(--folder-sd);font-style:italic;}
+.desktop-sub{
   font-size:15px;
-  color:var(--ink-mid);
-  line-height:1.75;
+  color:rgba(255,255,255,0.75);
+  max-width:480px;line-height:1.7;
 }
 
-/* Card footer */
-.card-footer{
-  padding:14px 24px;
-  border-top:1px solid var(--rule);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:12px;
+/* ── LEGEND ── */
+.legend{
+  display:flex;gap:20px;flex-wrap:wrap;
+  margin-bottom:48px;
+  opacity:0;animation:fadein 0.6s ease 0.1s forwards;
 }
-.card-meta{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-}
-.card-meta-item{
-  font-size:12px;
-  color:var(--ink-light);
-  letter-spacing:0.3px;
-}
-.card-meta-item strong{
-  color:var(--ink-mid);
-  font-weight:500;
-}
-.read-btn{
-  display:inline-flex;
-  align-items:center;
-  gap:7px;
-  padding:10px 20px;
-  border:1.5px solid var(--ink);
-  border-radius:2px;
-  font-family:'DM Sans',sans-serif;
-  font-size:13px;
-  font-weight:500;
-  color:var(--ink);
-  text-decoration:none;
+.legend-item{
+  display:flex;align-items:center;gap:7px;
+  font-size:11px;color:rgba(255,255,255,0.75);
   letter-spacing:0.5px;
-  transition:all 0.2s ease;
+}
+.legend-dot{
+  width:10px;height:10px;border-radius:2px;flex-shrink:0;
+}
+
+/* ── FOLDER GRID ── */
+.folder-grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:40px 48px;
+  align-items:flex-start;
+}
+
+/* ── SINGLE FOLDER ── */
+.folder-item{
+  display:flex;flex-direction:column;align-items:center;
+  width:96px;cursor:pointer;
+  opacity:0;animation:fadein 0.5s ease forwards;
+  text-decoration:none;
+}
+.folder-item:nth-child(1){animation-delay:0.15s;}
+.folder-item:nth-child(2){animation-delay:0.22s;}
+.folder-item:nth-child(3){animation-delay:0.29s;}
+.folder-item:nth-child(4){animation-delay:0.36s;}
+.folder-item:nth-child(5){animation-delay:0.43s;}
+
+/* folder icon */
+.folder-icon{
+  width:72px;height:60px;
+  position:relative;
+  margin-bottom:8px;
+  transition:transform 0.15s ease, filter 0.15s ease;
+}
+.folder-item:hover .folder-icon{
+  transform:translateY(-4px) scale(1.05);
+  filter:brightness(1.15);
+}
+.folder-item:active .folder-icon{
+  transform:scale(0.95);
+}
+
+/* SVG folder shape */
+.folder-icon svg{width:100%;height:100%;}
+
+/* folder tab */
+.f-tab{transition:all 0.15s;}
+.f-body{transition:all 0.15s;}
+
+/* selected state */
+.folder-item.selected .folder-icon{
+  filter:brightness(1.3) saturate(1.2);
+}
+.folder-item.selected .folder-label{
+  background:rgba(91,100,180,0.6);
+  color:white;border-radius:3px;
+  padding:1px 5px;
+}
+
+/* service design badge on folder */
+.folder-badge{
+  position:absolute;
+  top:-6px;right:-6px;
+  width:18px;height:18px;
+  border-radius:50%;
+  background:var(--folder-sd);
+  border:2px solid rgba(20,28,50,0.9);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:700;color:white;
+  letter-spacing:0;
+}
+
+/* coming soon overlay */
+.folder-soon{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.folder-soon-label{
+  font-size:7px;font-weight:500;
+  color:rgba(255,255,255,0.72);
+  letter-spacing:1.5px;text-transform:uppercase;
+  text-align:center;line-height:1.3;
+  margin-top:10px;
+}
+
+/* folder label */
+.folder-label{
+  font-size:11px;
+  color:var(--text-desktop);
+  text-align:center;
+  line-height:1.35;
+  max-width:90px;
+  text-shadow:0 1px 4px rgba(0,0,0,0.5);
+  transition:all 0.15s;
+  word-break:break-word;
+}
+.folder-sublabel{
+  font-size:10px;
+  color:var(--text-desktop-sub);
+  text-align:center;margin-top:2px;
+  line-height:1.3;
+}
+
+/* ── TOOLTIP / INFO PANEL ── */
+.info-panel{
+  position:fixed;
+  bottom:32px;left:50%;
+  transform:translateX(-50%) translateY(12px);
+  background:rgba(10,14,28,0.92);
+  backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;
+  padding:16px 22px;
+  min-width:320px;max-width:480px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.2s ease, transform 0.2s ease;
+  z-index:200;
+}
+.info-panel.visible{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+  pointer-events:auto;
+}
+.info-panel-title{
+  font-family:'DM Serif Display',serif;
+  font-size:16px;color:rgba(255,255,255,0.92);
+  margin-bottom:4px;
+}
+.info-panel-desc{
+  font-size:13px;color:rgba(255,255,255,0.80);
+  line-height:1.6;margin-bottom:12px;
+}
+.info-panel-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.info-tag{
+  font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;
+  padding:2px 8px;border-radius:2px;
+}
+.info-tag.sd{background:rgba(91,191,168,0.2);color:var(--folder-sd);}
+.info-tag.ux{background:rgba(123,159,212,0.2);color:var(--folder-ux);}
+.info-tag.soon{background:rgba(168,156,200,0.15);color:var(--folder-soon);}
+.info-tag.plain{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.75);}
+.info-panel-footer{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);
+}
+.info-open-btn{
+  font-size:12px;font-weight:500;color:rgba(255,255,255,0.85);
+  text-decoration:none;letter-spacing:0.5px;
+  padding:6px 14px;
+  border:1px solid rgba(255,255,255,0.55);border-radius:2px;
+  transition:all 0.2s;
+}
+.info-open-btn:hover{background:rgba(255,255,255,0.1);}
+.info-close{
+  font-size:12px;color:rgba(255,255,255,0.65);
+  cursor:pointer;letter-spacing:0.5px;
+  transition:color 0.2s;
+}
+.info-close:hover{color:rgba(255,255,255,0.6);}
+
+/* ── SECTION DIVIDER ── */
+.section-divider{
+  width:100%;
+  display:flex;align-items:center;gap:14px;
+  margin:20px 0 36px;
+  opacity:0;animation:fadein 0.6s ease 0.3s forwards;
+}
+.section-divider-label{
+  font-size:10px;font-weight:500;
+  color:rgba(255,255,255,0.60);
+  letter-spacing:3px;text-transform:uppercase;
   white-space:nowrap;
 }
-.read-btn:hover{background:var(--ink);color:var(--bg);}
+.section-divider-line{flex:1;height:1px;background:rgba(255,255,255,0.07);}
 
-/* ── MORE COMING ── */
+/* ── MORE NOTE ── */
 .more-note{
-  margin-top:48px;
+  margin-top:64px;
   padding-top:32px;
-  border-top:1px solid var(--rule);
-  text-align:center;
-  opacity:0;
-  animation:fadein 0.7s ease 0.35s forwards;
+  border-top:1px solid rgba(255,255,255,0.07);
+  opacity:0;animation:fadein 0.6s ease 0.5s forwards;
 }
 .more-text{
   font-family:'DM Serif Display',serif;
-  font-style:italic;
-  font-size:16px;
-  color:var(--ink-light);
+  font-style:italic;font-size:15px;
+  color:rgba(255,255,255,0.65);
 }
 .more-sub{
-  font-size:13px;
-  color:var(--ink-light);
+  font-size:12px;color:rgba(255,255,255,0.55);
   margin-top:6px;
-  opacity:0.7;
 }
+.more-sub a{color:rgba(255,255,255,0.65);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.15);}
+.more-sub a:hover{color:rgba(255,255,255,0.6);}
 
 /* ── FOOTER ── */
 .footer{
-  margin-top:64px;
-  padding-top:28px;
-  border-top:1px solid var(--rule);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:12px;
-  opacity:0;
-  animation:fadein 0.7s ease 0.4s forwards;
+  margin-top:48px;
+  padding-top:24px;
+  border-top:1px solid rgba(255,255,255,0.07);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  opacity:0;animation:fadein 0.6s ease 0.6s forwards;
 }
-.footer-left{font-size:13px;color:var(--ink-light);}
-.footer-right a{
-  font-size:13px;
-  color:var(--ink-light);
-  text-decoration:none;
-  transition:color 0.2s;
+.footer-left{font-size:12px;color:rgba(255,255,255,0.60);}
+.footer-right a{font-size:12px;color:rgba(255,255,255,0.60);text-decoration:none;transition:color 0.2s;}
+.footer-right a:hover{color:rgba(255,255,255,0.6);}
+
+@media(max-width:640px){
+  .menubar{padding:0 16px;}
+  .desktop-content{padding:72px 24px 60px;}
+  .folder-grid{gap:28px 32px;}
 }
-.footer-right a:hover{color:var(--ink);}
 </style>
 </head>
 <body>
 
-<nav class="nav">
-  <a href="/" class="nav-back">← Curiosity Lab</a>
-  <div class="nav-name">Naomi Rountree</div>
-  <div class="nav-links">
-    <a href="/about.html" class="nav-link">About</a>
-    <a href="https://www.linkedin.com/in/naomi-rountree" target="_blank" class="nav-link">LinkedIn ↗</a>
+<!-- MENUBAR -->
+<nav class="menubar">
+  <div class="menubar-left">
+    <a href="/" class="menubar-logo">Curiosity Lab</a>
+    <a href="/case-studies.html" class="menubar-item">Case Studies</a>
+    <a href="/about.html" class="menubar-item">About</a>
+  </div>
+  <div class="menubar-right">
+    <a href="https://www.linkedin.com/in/naomi-rountree" target="_blank" class="menubar-item">LinkedIn ↗</a>
+    <div class="menubar-clock" id="clock"></div>
   </div>
 </nav>
 
-<main class="page">
+<div class="desktop">
+  <div class="desktop-content">
 
-  <!-- HEADER -->
-  <div class="page-header">
-    <div class="header-tag">Case Studies</div>
-    <h1 class="header-title">The work, and<br><em style="font-style:italic;color:var(--ink-mid);">the thinking behind it.</em></h1>
-    <p class="header-body">Two deep dives — one into a greenfield prototype built on my own time, one into a year-long shipped feature that changed how a platform's users access their own data.</p>
-  </div>
+    <!-- HEADER -->
+    <div class="desktop-header">
+      <div class="desktop-eyebrow">Naomi Rountree · Portfolio</div>
+      <h1 class="desktop-title">The work,<br>and <em>the thinking behind it.</em></h1>
+      <p class="desktop-sub">Click a folder to preview. Double-click to open the full case study.</p>
+    </div>
 
-  <!-- CARDS -->
-  <div class="cards">
-
-    <!-- CARD 1: Reporting Tool -->
-    <div class="card">
-      <div class="card-visual" style="background:#F0EEE8;">
-        <div class="card-visual-placeholder">
-          <div class="ph-line bold" style="width:55%;"></div>
-          <div class="ph-line" style="width:88%;"></div>
-          <div class="ph-line" style="width:72%;"></div>
-          <div class="ph-line" style="width:80%;"></div>
-          <div class="ph-line" style="width:60%;"></div>
-        </div>
-        <div class="visuals-badge">// visuals coming soon</div>
+    <!-- LEGEND -->
+    <div class="legend">
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--folder-sd);"></div>
+        Service Design
       </div>
-      <div class="card-body">
-        <div class="tag-row">
-          <span class="tag">Shipped</span>
-          <span class="tag">Phased release</span>
-          <span class="tag">1 year</span>
-        </div>
-        <div class="card-title">The Reporting Tool</div>
-        <p class="card-desc">A full report builder built from scratch — drag and drop, live preview, custom templates, internal sharing, and universal CSV export. The project that changed how I operate as a designer.</p>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--folder-ux);"></div>
+        UX / Product Design
       </div>
-      <div class="card-footer">
-        <div class="card-meta">
-          <span class="card-meta-item"><strong>Role:</strong> UX & Product Designer</span>
-          <span class="card-meta-item"><strong>Type:</strong> Shipped product feature</span>
-        </div>
-        <a href="/reporting-tool-case-study.html" class="read-btn">Read case study →</a>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:var(--folder-soon);opacity:0.5;"></div>
+        Coming soon
       </div>
     </div>
 
-    <!-- CARD 2: TriMetrics -->
-    <div class="card">
-      <div class="card-visual">
-        <div class="mini-dashboard">
-          <div class="mini-top">
-            <div class="mini-metric">
-              <div class="mini-metric-label">Enrollment</div>
-              <div class="mini-metric-val">89.2%</div>
-            </div>
-            <div class="mini-metric">
-              <div class="mini-metric-label">Rev / child</div>
-              <div class="mini-metric-val">$1,295</div>
-            </div>
-            <div class="mini-metric">
-              <div class="mini-metric-label">Fee coll.</div>
-              <div class="mini-metric-val">94.6%</div>
-            </div>
-          </div>
-          <div class="mini-bars">
-            <div class="mini-bar" style="height:78%;background:#7B8FD4;"></div>
-            <div class="mini-bar" style="height:92%;background:#6BBFA8;"></div>
-            <div class="mini-bar" style="height:74%;background:#A89CC8;"></div>
-            <div class="mini-bar" style="height:55%;background:#7B8FD4;"></div>
-            <div class="mini-bar" style="height:84%;background:#6BBFA8;"></div>
-            <div class="mini-bar" style="height:88%;background:#D97706;"></div>
-            <div class="mini-bar" style="height:80%;background:#A89CC8;"></div>
-            <div class="mini-bar" style="height:71%;background:#D97706;"></div>
-          </div>
+    <!-- FOLDER GRID -->
+    <div class="folder-grid" id="folderGrid">
+
+      <!-- Southwest -->
+      <a class="folder-item" href="/southwest-case-study.html"
+        data-title="Southwest Airlines COS Redesign"
+        data-desc="A service redesign that eliminates public humiliation by solving the problem upstream — before anyone boards the plane."
+        data-type="sd"
+        data-tags="Service Design,Concept Redesign,Equity + Access"
+        data-url="/southwest-case-study.html">
+        <div class="folder-icon">
+          <div class="folder-badge">SD</div>
+          <svg viewBox="0 0 72 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 18C2 15.8 3.8 14 6 14H28L34 8H66C68.2 8 70 9.8 70 12V52C70 54.2 68.2 56 66 56H6C3.8 56 2 54.2 2 52V18Z" fill="#4a8fbf" class="f-body"/>
+            <path d="M2 18C2 15.8 3.8 14 6 14H28L32 10H60C62.2 10 64 11.8 64 14H6C3.8 14 2 15.8 2 18Z" fill="#5bbfa8" class="f-tab"/>
+          </svg>
         </div>
-      </div>
-      <div class="card-body">
-        <div class="tag-row">
-          <span class="tag">Prototype</span>
-          <span class="tag">4 personas</span>
-          <span class="tag">Live</span>
+        <div class="folder-label">Southwest COS<br>Redesign</div>
+        <div class="folder-sublabel">Service Design</div>
+      </a>
+
+      <!-- AI-DLC -->
+      <a class="folder-item" href="/aidlc-case-study.html"
+        data-title="AI-DLC Design Handoff"
+        data-desc="Defined design's missing role in AI-DLC — adopted company-wide and incorporated into mandatory AWS training within a week."
+        data-type="sd"
+        data-tags="Service Design,Process Design,Real Project"
+        data-url="/aidlc-case-study.html">
+        <div class="folder-icon">
+          <div class="folder-badge">SD</div>
+          <svg viewBox="0 0 72 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 18C2 15.8 3.8 14 6 14H28L34 8H66C68.2 8 70 9.8 70 12V52C70 54.2 68.2 56 66 56H6C3.8 56 2 54.2 2 52V18Z" fill="#4a8fbf" class="f-body"/>
+            <path d="M2 18C2 15.8 3.8 14 6 14H28L32 10H60C62.2 10 64 11.8 64 14H6C3.8 14 2 15.8 2 18Z" fill="#5bbfa8" class="f-tab"/>
+          </svg>
         </div>
-        <div class="card-title">TriMetrics ECE</div>
-        <p class="card-desc">A purpose-built financial dashboard for ECE operators — tracking enrollment, revenue per child, and fee collection in one place. Built from listening, finished on my own time when it was shelved before it was done.</p>
-      </div>
-      <div class="card-footer">
-        <div class="card-meta">
-          <span class="card-meta-item"><strong>Role:</strong> UX & Product Designer</span>
-          <span class="card-meta-item"><strong>Type:</strong> Greenfield prototype</span>
+        <div class="folder-label">AI-DLC Design<br>Handoff</div>
+        <div class="folder-sublabel">Service Design</div>
+      </a>
+
+      <!-- Reporting Tool -->
+      <a class="folder-item" href="/reporting-tool-case-study.html"
+        data-title="The Reporting Tool"
+        data-desc="A full report builder with drag and drop, live preview, custom templates, and universal CSV export — the only major feature shipped by end of year."
+        data-type="ux"
+        data-tags="Shipped Feature,UX Design,1 Year"
+        data-url="/reporting-tool-case-study.html">
+        <div class="folder-icon">
+          <svg viewBox="0 0 72 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 18C2 15.8 3.8 14 6 14H28L34 8H66C68.2 8 70 9.8 70 12V52C70 54.2 68.2 56 66 56H6C3.8 56 2 54.2 2 52V18Z" fill="#7b9fd4" class="f-body"/>
+            <path d="M2 18C2 15.8 3.8 14 6 14H28L32 10H60C62.2 10 64 11.8 64 14H6C3.8 14 2 15.8 2 18Z" fill="#a8c4e8" class="f-tab"/>
+          </svg>
         </div>
-        <a href="/trimetrics-case-study.html" class="read-btn">Read case study →</a>
-      </div>
+        <div class="folder-label">The Reporting<br>Tool</div>
+        <div class="folder-sublabel">UX Design</div>
+      </a>
+
+      <!-- TriMetrics -->
+      <a class="folder-item" href="/trimetrics-case-study.html"
+        data-title="TriMetrics ECE"
+        data-desc="A purpose-built financial dashboard for ECE operators — tracking enrollment, revenue per child, and fee collection in one place."
+        data-type="ux"
+        data-tags="Prototype,Greenfield,UX Design"
+        data-url="/trimetrics-case-study.html">
+        <div class="folder-icon">
+          <svg viewBox="0 0 72 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 18C2 15.8 3.8 14 6 14H28L34 8H66C68.2 8 70 9.8 70 12V52C70 54.2 68.2 56 66 56H6C3.8 56 2 54.2 2 52V18Z" fill="#7b9fd4" class="f-body"/>
+            <path d="M2 18C2 15.8 3.8 14 6 14H28L32 10H60C62.2 10 64 11.8 64 14H6C3.8 14 2 15.8 2 18Z" fill="#a8c4e8" class="f-tab"/>
+          </svg>
+        </div>
+        <div class="folder-label">TriMetrics<br>ECE</div>
+        <div class="folder-sublabel">UX Design</div>
+      </a>
+
+
+    </div><!-- end folder-grid -->
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-left">Naomi Rountree · UX &amp; Product Designer</div>
+      <div class="footer-right"><a href="/">← Back to Curiosity Lab</a></div>
     </div>
 
   </div>
+</div>
 
-  <!-- MORE COMING -->
-  <div class="more-note">
-    <div class="more-text">More work coming — including a micro-interactions collection.</div>
-    <div class="more-sub">Check back soon or <a href="https://www.linkedin.com/in/naomi-rountree" target="_blank" style="color:var(--ink-light);text-underline-offset:3px;">connect on LinkedIn</a> to follow along.</div>
+<!-- INFO PANEL -->
+<div class="info-panel" id="infoPanel">
+  <div class="info-panel-title" id="panelTitle"></div>
+  <div class="info-panel-desc" id="panelDesc"></div>
+  <div class="info-panel-tags" id="panelTags"></div>
+  <div class="info-panel-footer">
+    <a href="#" class="info-open-btn" id="panelBtn">Open case study →</a>
+    <span class="info-close" id="panelClose">✕ close</span>
   </div>
+</div>
 
-  <!-- FOOTER -->
-  <div class="footer">
-    <div class="footer-left">Naomi Rountree · UX &amp; Product Designer</div>
-    <div class="footer-right"><a href="/">← Back to Curiosity Lab</a></div>
-  </div>
+<script>
+// ── clock ──
+function updateClock(){
+  const d = new Date();
+  document.getElementById('clock').textContent =
+    d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true});
+}
+updateClock(); setInterval(updateClock, 1000);
 
-</main>
+// ── folder interactions ──
+const folders = document.querySelectorAll('.folder-item');
+const panel   = document.getElementById('infoPanel');
+const pTitle  = document.getElementById('panelTitle');
+const pDesc   = document.getElementById('panelDesc');
+const pTags   = document.getElementById('panelTags');
+const pBtn    = document.getElementById('panelBtn');
+let   active  = null;
 
+function showPanel(el){
+  const type  = el.dataset.type;
+  const tags  = (el.dataset.tags||'').split(',').filter(Boolean);
+  const url   = el.dataset.url;
+
+  pTitle.textContent = el.dataset.title || '';
+  pDesc.textContent  = el.dataset.desc  || '';
+  pTags.innerHTML = tags.map(t => {
+    const cls = t.toLowerCase().includes('service') ? 'sd'
+              : t.toLowerCase().includes('ux') || t.toLowerCase().includes('product') ? 'ux'
+              : type === 'soon' ? 'soon' : 'plain';
+    return `<span class="info-tag ${cls}">${t}</span>`;
+  }).join('');
+
+  if(url){
+    pBtn.href = url;
+    pBtn.style.display = 'inline-flex';
+    pBtn.textContent = 'Open case study →';
+  } else {
+    pBtn.style.display = 'none';
+  }
+  panel.classList.add('visible');
+}
+
+function closePanel(){
+  panel.classList.remove('visible');
+  folders.forEach(f => f.classList.remove('selected'));
+  active = null;
+}
+
+folders.forEach(el => {
+  let clicks = 0, timer;
+
+  el.addEventListener('click', function(e){
+    // prevent navigation on single click
+    e.preventDefault();
+    clicks++;
+    if(clicks === 1){
+      timer = setTimeout(() => {
+        clicks = 0;
+        // single click — select + show panel
+        if(active === el){
+          closePanel();
+          return;
+        }
+        folders.forEach(f => f.classList.remove('selected'));
+        el.classList.add('selected');
+        active = el;
+        showPanel(el);
+      }, 220);
+    } else {
+      // double click — navigate
+      clearTimeout(timer);
+      clicks = 0;
+      const url = el.dataset.url || el.getAttribute('href');
+      if(url) window.location.href = url;
+    }
+  });
+});
+
+document.getElementById('panelClose').addEventListener('click', closePanel);
+
+// close on outside click
+document.addEventListener('click', function(e){
+  if(!e.target.closest('.folder-item') && !e.target.closest('.info-panel')){
+    closePanel();
+  }
+});
+</script>
 </body>
 </html>
